@@ -7,28 +7,32 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-var results = [];
+var results = require('./moment.js');
 
-app.get('/', function(req, res) {
-    res.json(results);
+app.get('/api/getMoments', function(req, res) {
+    res.json(
+        results
+    );
+    res.end();
+    // res.end(results);
 });
 
 app.listen(8888, function() {
-    getMoments();
+    console.log('server is loaded');
 });
 
 // Get Moment List for 100
 function getMoments(momentids) {
-    for (var i = 0; i < 99; i++) {
+    // for (var i = 0; i < 99; i++) {
         var formData = {
             form: {
-                momentids: parseInt(6520300 + i)//6520365//'6473226'
+                momentids: parseInt(6544323)// + i)//6520365//'6473226'
             }
         };
         request.post('https://m.immomo.com/inc/moment/share/getMoments', formData, function(err, httpResponse, body) {
             results.push(body);
         });
-    }
+    // }
 }
 
 // Get a moment by momentids

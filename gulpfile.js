@@ -2,8 +2,12 @@ const gulp = require('gulp');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 var devWebpackConfig = require('./configs/webpack.config.dev.js');
+
 var bsConfig = require('./configs/bs.config.js');
 var browserSync = require('browser-sync');
+
+const nodemon = require('gulp-nodemon');
+var nodemonConfig = require('./configs/nodemon.config.js');
 
 const path = require('path');
 const $ = require('gulp-load-plugins');
@@ -17,7 +21,11 @@ gulp.task('dev', function() {
         compress: true,
         inline: true,
         contentBase: __dirname,
-        publicPath: '/dist/'
+        publicPath: '/dist/',
+        proxy: [{
+            path: ['/api/getMoments'],
+            target: 'http://localhost:8888/'
+        }]
         // proxy: [{
         //     path: ['/rest/**'],
         //     target: 'http://localhost/'
@@ -30,9 +38,14 @@ gulp.task('dev', function() {
         }
         else {
             bsServer();
+            server();
         }
     })
 });
-function bsServer(){
+function bsServer() {
     browserSync(bsConfig);
+}
+function server() {
+    console.log('server is set');
+    nodemon(nodemonConfig);
 }

@@ -2,10 +2,10 @@ const path = require('path');
 module.exports = {
     proxy: 'localhost:9090',
     host: 'localhost',
-    open: 'external',
+    // open: 'external',
     port: '9000',
     baseDir: '/',
-    browser: ['chrome'],
+    // browser: ['Chrome'],
     index: path.resolve(__dirname, '../app/index.html'),
     files: [
         path.resolve(__dirname, '../app/**/*.*')
